@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decent Sampler Preset Coordinate Adjuster</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #2d2d2d;
+            color: #dcdcdc;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #1e1e1e;
+        }
+        header {
+            background-color: #1e1e1e;
+            text-align: center;
+            padding: 20px;
+            height: auto;
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            height: auto;
+            position: relative;
+        }
+        header img {
+            height: 50px;
+            display: block;
+            margin: 0 auto;
+        }
+        .header-button {
+            background-color: #1e1e1e;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+        }
+        .header-button:hover {
+            background-color: #777;
+        }
+        .divider {
+            border-top: 2px solid #777;
+            margin: 20px 0;
+        }
+        table {
+            max-width: 480px;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: #444;
+            color: #fff;
+        }
+        table, th, td {
+            border: 1px solid #777;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #555;
+        }
+        .button-group {
+            max-width: 480px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        button {
+            margin: 10px;
+            padding: 10px;
+            background-color: #1e1e1e;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #777;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header style="width: 100%; margin: 0; padding: 0;">
+        <img src="Image/frank_faruk_logo_white.svg" alt="Frank Faruk Logo">
+        <button class="header-button" onclick="window.location.href='https://frankfaruksampling.site'">FRANK FARUK SAMPLING</button>
+        <hr class="divider" style="width: 100%; margin: 20px 0; border-top: 1px solid #777;">
+    </header>
+<body>
+    <h1>Decent Sampler Preset Coordinate Adjuster</h1>
+    <p>A simple Python script for adjusting the x and y coordinates in Decent Sampler <code>.dspreset</code> files. This script allows users to easily update the graphical layout of the Decent Sampler interface by shifting the positions of various elements based on user-specified adjustments.</p>
+
+    <h2>Features</h2>
+    <ul>
+        <li>Adjust x and y coordinates in <code>.dspreset</code> files.</li>
+        <li>User-specified adjustment values for both coordinates.</li>
+        <li>Skips adjustment if a coordinate value is not a valid integer.</li>
+        <li>Saves the adjusted file in the same directory with a <code>_adjusted</code> suffix.</li>
+        <li>Provides a graphical interface for file selection and input using tkinter.</li>
+    </ul>
+
+    <h2>Requirements</h2>
+    <ul>
+        <li>Python 3.x</li>
+        <li>The following Python modules, which are typically included with Python:</li>
+        <ul>
+            <li><code>xml.etree.ElementTree</code></li>
+            <li><code>tkinter</code></li>
+            <li><code>logging</code></li>
+            <li><code>pathlib</code></li>
+        </ul>
+    </ul>
+
+    <h2>Usage</h2>
+    <ol>
+        <li>Clone or download the script and save it as <code>adjust_dspreset.py</code>.</li>
+        <li>Make sure Python 3.x is installed on your system. You can download it from <a href="https://www.python.org/downloads/" target="_blank">python.org</a>.</li>
+        <li>Run the script using a terminal or command prompt:</li>
+        <pre><code class="language-python">python adjust_dspreset.py</code></pre>
+    </ol>
+
+    <h2>Code</h2>
+    <p>To begin, copy the Python code below. Then, open your chosen code editor (e.g., Sublime Text, Visual Studio Code) and paste the code into a new file. Save the file with a <code>.py</code> extension.</p>
+
+    ```python
+import xml.etree.ElementTree as ET
+import tkinter as tk
+from tkinter import filedialog, simpledialog, messagebox
+import logging
+from pathlib import Path
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def adjust_values(file_path, x_adjustment, y_adjustment):
+    # Parse the .dspreset file
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    # Iterate over all elements and adjust x and y values
+    for elem in root.iter():
+        if 'x' in elem.attrib and x_adjustment != 0:
+            try:
+                original_x = int(elem.attrib['x'])
+                new_x = original_x + x_adjustment
+                elem.set('x', str(new_x))
+                logging.info(f'Adjusted x from {original_x} to {new_x}')
+            except ValueError:
+                logging.warning(f'Skipping non-integer x value: {elem.attrib["x"]}')
+
+        if 'y' in elem.attrib and y_adjustment != 0:
+            try:
+                original_y = int(elem.attrib['y'])
+                new_y = original_y + y_adjustment
+                elem.set('y', str(new_y))
+                logging.info(f'Adjusted y from {original_y} to {new_y}')
+            except ValueError:
+                logging.warning(f'Skipping non-integer y value: {elem.attrib["y"]}')
+
+    # Save the adjusted .dspreset to the same directory with "_adjusted" suffix
+    new_file_path = Path(file_path).parent / (Path(file_path).stem + '_adjusted.dspreset')
+    tree.write(new_file_path)
+    logging.info(f'Adjusted .dspreset file saved to {new_file_path}')
+
+def select_file_and_adjust():
+    # Open file dialog to select a .dspreset file
+    file_path = filedialog.askopenfilename(
+        title='Select a Decent Sampler Preset (.dspreset) file',
+        filetypes=[('Decent Sampler Preset Files', '*.dspreset')]
+    )
+
+    if not file_path:
+        messagebox.showwarning('No File Selected', 'Please select a .dspreset file to proceed.')
+        return
+
+    # Ask user for x and y adjustments
+    try:
+        x_adjustment = simpledialog.askinteger('X Adjustment', 'Enter the amount to adjust X (0 means no change):', initialvalue=0)
+        y_adjustment = simpledialog.askinteger('Y Adjustment', 'Enter the amount to adjust Y (0 means no change):', initialvalue=0)
+
+        if x_adjustment is None or y_adjustment is None:
+            messagebox.showwarning('Input Canceled', 'Adjustments were not specified.')
+            return
+
+        adjust_values(file_path, x_adjustment, y_adjustment)
+        messagebox.showinfo('Success', f'File adjusted successfully and saved as: {Path(file_path).stem}_adjusted.dspreset')
+    except Exception as e:
+        logging.error(f'Error adjusting file: {e}')
+        messagebox.showerror('Error', f'An error occurred: {e}')
+
+def main():
+    # Create a simple Tkinter GUI
+    root = tk.Tk()
+    root.withdraw() # Hide the root window
+
+    # Prompt user to select a file and adjust it
+    select_file_and_adjust()
+
+    # Close the Tkinter root window
+    root.quit()
+
+if __name__ == '__main__':
+    main()
+```
+
+    <hr class="divider" style="width: 100%; margin: 20px 0; border-top: 1px solid #777;">
+<footer style="text-align: center; margin: 20px 0; color: #dcdcdc; font-size: 14px;">
+    This website design by ChatGPT and Frank Faruk Sampling © Copyright 2024 - <button class="email-button" onclick="window.location.href='mailto:frankfaruksampling@gmail.com'">Email Me</button>
+</footer>
+</body>
+</html>

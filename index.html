@@ -95,9 +95,7 @@
             margin: 1em 0;
             overflow: auto;
         }
-        code {
-            font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace;
-        }
+        code { font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace; color: grey; color: grey; }
         /* Inline code styling */
         :not(pre) > code {
             background-color: #3a3a3a;
@@ -130,11 +128,11 @@
     </header>
 
     <h1>Decent Sampler Preset Coordinate Adjuster</h1>
-    <p>A simple Python script for adjusting the x and y coordinates in Decent Sampler <code>.dspreset</code> files. This script allows users to easily update the graphical layout of the Decent Sampler interface by shifting the positions of various elements based on user-specified adjustments.</p>
+    <p>A simple Python script for adjusting the x and y coordinates in Decent Sampler <code >.dspreset</code> files. This script allows users to easily update the graphical layout of the Decent Sampler interface by shifting the positions of various elements based on user-specified adjustments.</p>
 
     <h2>Features</h2>
     <ul>
-        <li>Adjust x and y coordinates in <code>.dspreset</code> files.</li>
+        <li>Adjust x and y coordinates in <code >.dspreset</code> files.</li>
         <li>User-specified adjustment values for both coordinates.</li>
         <li>Skips adjustment if a coordinate value is not a valid integer.</li>
         <li>Saves the adjusted file in the same directory with a <code>_adjusted</code> suffix.</li>
@@ -146,29 +144,29 @@
         <li>Python 3.x</li>
         <li>The following Python modules, which are typically included with Python:</li>
         <ul>
-            <li><code>xml.etree.ElementTree</code></li>
-            <li><code>tkinter</code></li>
-            <li><code>logging</code></li>
-            <li><code>pathlib</code></li>
+            <li><code >xml.etree.ElementTree</code></li>
+            <li><code >tkinter</code></li>
+            <li><code >logging</code></li>
+            <li><code >pathlib</code></li>
         </ul>
     </ul>
 
     <h2>Usage</h2>
     <ol>
-        <li>Clone or download the script and save it as <code>adjust_dspreset.py</code>.</li>
+        <li>Clone or download the script and save it as <code >adjust_dspreset.py</code>.</li>
         <li>Make sure Python 3.x is installed on your system. You can download it from <a href="https://www.python.org/downloads/" target="_blank">python.org</a>.</li>
         <li>Run the script using a terminal or command prompt:</li>
-        <pre><code class="language-python">python adjust_dspreset.py</code></pre>
+        <pre><code class="language-python" >python adjust_dspreset.py</code></pre>
     </ol>
-    <h2>Code</h2>
-    <div style="display: flex; align-items: center; margin-bottom: 10px;">
-        <span style="margin-right: 10px; font-weight: bold;">COPY</span>
-        <button onclick="copyToClipboard()" style="background-color: #1e1e1e; color: #fff; border: none; padding: 5px 10px; cursor: pointer;">
+
+    
+<h2>Code</h2>
+    <p>To begin, copy the Python code below. Then, open your chosen code editor (e.g., Sublime Text, Visual Studio Code) and paste the code into a new file. Save the file with a <code>.py</code> extension.</p>
+    
+    <div style="display: flex; align-items: center; justify-content: flex-end; margin-bottom: 10px;"><button onclick="copyToClipboard()" style="background-color: #1e1e1e; color: #fff; border: none; padding: 5px 10px; cursor: pointer;">
             <img src="https://img.icons8.com/ios-glyphs/30/ffffff/copy.png" alt="Copy Icon" style="width: 20px; height: 20px; vertical-align: middle;">
         </button>
     </div>
-    <h2>Code</h2>
-    <p>To begin, copy the Python code below. Then, open your chosen code editor (e.g., Sublime Text, Visual Studio Code) and paste the code into a new file. Save the file with a <code>.py</code> extension.</p>
 
     <pre><code class="language-python">import xml.etree.ElementTree as ET
 import tkinter as tk
@@ -249,13 +247,29 @@ def main():
 if __name__ == '__main__':
     main()</code></pre>
 
-    <hr class="divider">
+    <hr class="divider" style="width: 100%; margin: 20px 0; border-top: 1px solid #777;">
     <footer style="text-align: center; margin: 20px 0; color: #dcdcdc; font-size: 14px;">
-        This website design by ChatGPT and Frank Faruk Sampling © Copyright 2024 - <button class="email-button" onclick="window.location.href='mailto:frankfaruksampling@gmail.com'">Email Me</button>
+        This website design by ChatGPT / <a href="https://frankfaruksampling.site" target="_blank">Frank Faruk Sampling</a> © Copyright 2024
     </footer>
 
     <!-- Add Prism JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        function copyToClipboard() {
+            const codeBlock = document.querySelector('pre code.language-python');
+            const textArea = document.createElement('textarea');
+            textArea.value = codeBlock.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert('Code copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy text', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
 </body>
 </html>
